@@ -113,31 +113,33 @@
     <form id="materialForm">
         <div id="tableBody">
             <!-- Anzahl mit Label und Input nebeneinander -->
-            <div class="form-group-flex">
-                <label for="anzahl">Anzahl</label>
-                <input type="number" name="anzahl[]" required min="1">
-            </div>
+            <div class="form-group" id="row1">
+                <div class="form-group-flex">
+                    <label for="anzahl">Anzahl</label>
+                    <input type="number" name="anzahl[]" required min="1">
+                </div>
 
-            <!-- Material -->
-            <div class="form-group-flex">
-                <label for="material">Material</label>
-                <input list="materialListe" name="material[]" required oninput="updateArtikelnummer(this)">
-            </div>
+                <!-- Material -->
+                <div class="form-group-flex">
+                    <label for="material">Material</label>
+                    <input list="materialListe" name="material[]" required oninput="updateArtikelnummer(this)">
+                </div>
 
-            <!-- Bemerkung -->
-            <div class="form-group-flex">
-                <label for="bemerkung">Bemerkung</label>
-                <input type="text" name="bemerkung[]" required>
-            </div>
+                <!-- Bemerkung -->
+                <div class="form-group-flex">
+                    <label for="bemerkung">Bemerkung</label>
+                    <input type="text" name="bemerkung[]" required>
+                </div>
 
-            <!-- Standort -->
-            <div class="form-group-flex">
-                <label for="standort">Standort</label>
-                <select name="standort[]">
-                    <option value="HP Emmen">HP Emmen</option>
-                    <option value="PP Reussbühl">PP Reussbühl</option>
-                    <option value="PP Rothenburg">PP Rothenburg</option>
-                </select>
+                <!-- Standort -->
+                <div class="form-group-flex">
+                    <label for="standort">Standort</label>
+                    <select name="standort[]">
+                        <option value="HP Emmen">HP Emmen</option>
+                        <option value="PP Reussbühl">PP Reussbühl</option>
+                        <option value="PP Rothenburg">PP Rothenburg</option>
+                    </select>
+                </div>
             </div>
         </div>
 
@@ -231,4 +233,20 @@ function submitForm() {
     let tableContent = "";
 
     tableRows.forEach(row => {
-        const anzahl
+        const anzahl = row.querySelector('input[name="anzahl[]"]').value;
+        const material = row.querySelector('input[name="material[]"]').value;
+        const bemerkung = row.querySelector('input[name="bemerkung[]"]').value;
+        const standort = row.querySelector('select[name="standort[]"]').value;
+
+        tableContent += `Anzahl: ${anzahl}, Material: ${material}, Bemerkung: ${bemerkung}, Standort: ${standort}\n`;
+    });
+
+    emailBody += tableContent;
+
+    // Öffne das E-Mail-Programm
+    window.location.href = `mailto:?subject=Materialbestellung vom ${formattedDate}&body=${encodeURIComponent(emailBody)}`;
+}
+</script>
+
+</body>
+</html>
