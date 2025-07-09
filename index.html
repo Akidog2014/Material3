@@ -17,17 +17,24 @@
             margin: 20px 0;
         }
 
-        table {
+        .form-group {
+            display: flex;
+            flex-direction: column;
             width: 100%;
-            border-collapse: collapse;
             margin-bottom: 20px;
         }
 
-        th, td {
-            padding: 10px;
-            text-align: left;
-            border: 1px solid #ccc;
-            word-wrap: break-word;
+        .form-group-flex {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-right: 10px;
+            min-width: 80px;
         }
 
         input, select {
@@ -35,12 +42,6 @@
             padding: 8px;
             margin: 5px 0;
             box-sizing: border-box;
-        }
-
-        label {
-            font-weight: bold;
-            margin-top: 10px;
-            display: block;
         }
 
         button {
@@ -62,31 +63,30 @@
 
         /* Optimierungen für mobile Geräte */
         @media (max-width: 600px) {
-            table, th, td {
-                width: 100%;
-                display: block;
-                margin: 0;
-            }
-
-            td {
-                display: block;
-                width: 100%;
-                box-sizing: border-box;
-            }
-
-            .form-group {
+            .form-group-flex {
                 display: flex;
-                flex-direction: column;
-                width: 100%;
-                margin-bottom: 20px;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .form-group-flex input,
+            .form-group-flex select {
+                flex-grow: 1;
+            }
+
+            label {
+                width: auto;
             }
 
             button {
                 width: 100%;
             }
+
+            .container {
+                padding: 0 15px;
+            }
         }
 
-        /* Verhindert horizontales Scrollen und sorgt für ein responsives Layout */
         * {
             box-sizing: border-box;
         }
@@ -109,32 +109,36 @@
     <h2>Materialtabelle</h2>
 
     <form id="materialForm">
-        <table>
-            <thead>
-                <tr>
-                    <th>Anzahl</th>
-                    <th>Material</th>
-                    <th>Bemerkung</th>
-                    <th>Standort</th>
-                </tr>
-            </thead>
-            <tbody id="tableBody">
-                <tr>
-                    <td><input type="number" name="anzahl[]" required min="1"></td>
-                    <td>
-                        <input list="materialListe" name="material[]" required oninput="updateArtikelnummer(this)">
-                    </td>
-                    <td><input type="text" name="bemerkung[]" required></td>
-                    <td>
-                        <select name="standort[]">
-                            <option value="HP Emmen">HP Emmen</option>
-                            <option value="PP Reussbühl">PP Reussbühl</option>
-                            <option value="PP Rothenburg">PP Rothenburg</option>
-                        </select>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div id="tableBody">
+            <!-- Anzahl mit Label und Input nebeneinander -->
+            <div class="form-group-flex">
+                <label for="anzahl">Anzahl</label>
+                <input type="number" name="anzahl[]" required min="1">
+            </div>
+
+            <!-- Material -->
+            <div class="form-group">
+                <label for="material">Material</label>
+                <input list="materialListe" name="material[]" required oninput="updateArtikelnummer(this)">
+            </div>
+
+            <!-- Bemerkung -->
+            <div class="form-group">
+                <label for="bemerkung">Bemerkung</label>
+                <input type="text" name="bemerkung[]" required>
+            </div>
+
+            <!-- Standort -->
+            <div class="form-group">
+                <label for="standort">Standort</label>
+                <select name="standort[]">
+                    <option value="HP Emmen">HP Emmen</option>
+                    <option value="PP Reussbühl">PP Reussbühl</option>
+                    <option value="PP Rothenburg">PP Rothenburg</option>
+                </select>
+            </div>
+        </div>
+
         <button type="button" onclick="addRow()">Weitere Zeile hinzufügen</button><br><br>
         <button type="button" onclick="submitForm()">Abschicken</button>
     </form>
@@ -151,171 +155,6 @@
         <option value="Einwegmundstück zu Intoxilyzer 9000, transparent/rot"></option>
         <option value="Anhänge-Etiketten mit Bindfaden 35x50mm"></option>
         <option value="Anhänge-Etiketten mit Bindfaden 50x100mm"></option>
-	<option value="Badgeholder, 16-434, für Polizeiausweis"></option>
-  	<option value="Clip für Badgeholder ,16-316, für Polizeiausweis"></option>
- 	<option value="Batterie, LR03, AAA 1,5V"></option>
-  	<option value="Batterie, LR6, AA 1,5 V"></option>
-  	<option value="Batterie, LR14, Baby, 1,5V"></option>
-  	<option value="Batterie, LR20, 1,5V"></option>
-  	<option value="Klotzbatterie, 6LR61, 9V"></option>
-  	<option value="Knopfbatterie, CR2032, 3V"></option>
-  	<option value="Knopfbatterie, DA10N6, 1,4V, (Hörgerät)"></option>
-  	<option value="Knopfbatterie, LR44, 1,5V"></option>
-  	<option value="Betonband Tesa 50mmx50m, schwarz"></option>
-  	<option value="Bleistifte Natura HB/mittel"></option>
-  	<option value="Boardmarker edding 250 abwischbar schw."></option>
-  	<option value="Boardmarker edding 250 abwischbar rot"></option>
-  	<option value="Boardmarker edding 250 abwischbar blau"></option>
-  	<option value="Boardmarker edding 250 abwischbar grün"></option>
-  	<option value="Boardmarker edding 250 abwischbar orange"></option>
-  	<option value="Briefkörbe für A4 schwarz, 10cm"></option>
-  	<option value="Briefkörbe für A4 schwarz, 6cm"></option>
-  	<option value="Büroklammern, Grösse 3/4/5, Beutel assortiert"></option>
-  	<option value="Büroschere 21cm lang, rot, rechts"></option>
-  	<option value="Büroschere 21cm lang, rot, links"></option>
-  	<option value="Cannabis Typification Test (CBD/THC)"></option>
-  	<option value="CD/ DVD Zeigbuchtaschen Favorit, für 1 CD/DVD, transparent"></option>
-  	<option value="CD-R Imation, 700 MB, 80 Min, 1x beschreibbar, 18647, Spindel zu 50 Stk"></option>
-  	<option value="DrugWipe 5S+, Tests (Schnelltest Drogen)"></option>
-  	<option value="DVD-R TDK 4.7 GB, 120 Min, Spindel zu 25 Stk"></option>
-  	<option value="Elcosave, Sicherheitstaschen"></option>
-  <option value="Etiketten Herma 2250, Dm 19mm ,weiss"></option>
-  <option value="Etiketten Herma 2251, Dm 19mm, gelb"></option>
-  <option value="Etiketten Herma 2252, Dm 19mm, rot"></option>
-  <option value="Etiketten Herma 2253, Dm 19mm, blau"></option>
-  <option value="Etiketten Herma 2255, Dm 19mm, grün"></option>
-  <option value="Etiketten Herma 2270, Dm 32mm, weiss"></option>
-  <option value="Etiketten Herma 2271, Dm 32mm, gelb"></option>
-  <option value="Etiketten Herma 2272, Dm 32mm, rot"></option>
-  <option value="Etiketten Herma 2273, Dm 32mm, blau"></option>
-  <option value="Etiketten Herma 2275, Dm 32mm, grün"></option>
-  <option value="Etiketten Herma 2276, Dm 32mm, l`rot"></option>
-  <option value="Faltenkuvert B4 4cm-Bodenfalten, Seitenfalten, Haftklebeverschluss, KF34018, Effektensäcke"></option>
-  <option value="Farbstifte Bicolor blau/rot"></option>
-  <option value="Frankatur Fr. 1.00, B-Post, B5, 0-100g"></option>
-  <option value="Frankatur Fr. 1.20, A-Post, B5, 0-100g"></option>
-  <option value="Frankatur Fr. 2.50, A-Post, B4, 0-500g"></option>
-  <option value="Filzschreiber Schneider, 0.4mm, schwarz"></option>
-  <option value="Filzschreiber Schneider, 0.4mm, rot"></option>
-  <option value="Filzschreiber Schneider, 0.4 mm, blau"></option>
-  <option value="Filzschreiber Schneider, 0.4mm, grün"></option>
-  <option value="Flipchart- Block 67x95cm"></option>
-  <option value="Fud-/ Blutentnahme Set"></option>
-  <option value="Grifflochtragtaschen weiss, unbedruckt 600x550/50x0,07 mm, Griffloch verstärkt, gross"></option>
-  <option value="Grifflochtragtaschen weiss, unbedruckt 400x450/40x0.06 mm, Griffloch verstärkt, klein"></option>
-  <option value="Haftnotizenzettel 38x51mm, gelb, selbstklebend ablösbar"></option>
-  <option value="Haftnotizenzettel 76x76mm, gelb, selbstklebend ablösbar"></option>
-  <option value="Haftnotizenzettel 76x127mm, gelb, selbstklebend ablösbar"></option>
-  <option value="Heftapparat Leitz Nexxt 5502, schwarz"></option>
-  <option value="Heftklammern Leitz 24/6, zu 5502, heften bis zu 6mm"></option>
-  <option value="Heftklammern Bostitch SB8, heften bis zu 6mm"></option>
-  <option value="Kehrichtsack 35 lt."></option>
-  <option value="Kehrichtsack 60 lt."></option>
-  <option value="Kehrichtsack 110 lt."></option>
-  <option value="Klebeband transparent 19mmx33m, Rolle nicht beschriftbar"></option>
-  <option value="Klebbandabroller non permanent, 8.4mmx12m"></option>
-  <option value="Klebbandabroller Ersatzrolle, non permanent, 8.4mmx12m, Roll-Fix"></option>
-  <option value="Klebbandabroller permanent, 8.4mmx12m"></option>
-  <option value="Klebbandabroller Ersatzrolle, permanent"></option>
-  <option value="Klebestift Pritt gross 43g"></option>
-  <option value="Klebeband-Handabroller rauchfarbig, für 19mm33m"></option>
-  <option value="Kopierpapier A4, 80g"></option>
-  <option value="Kopierpapier A3 80g weiss"></option>
-  <option value="Korrekturroller 4.2mmx12m, Roll-Fix mit Abroller, nachfüllbar"></option>
-  <option value="Korrekturroller Ersatzrolle 4.2mmx12m, Roll-Fix"></option>
-  <option value="Kugelschreiber 825, schwarz"></option>
-  <option value="Kugelschreiber 825, rot"></option>
-  <option value="Kugelschreiber 825, blau"></option>
-  <option value="Kugelschreiber 825, grün"></option>
-  <option value="Kuvert C4 Interne Post 120g"></option>
-  <option value="Kuvert C4 braun, mit Logo und Strichcode , 910086"></option>
-  <option value="Fensterkuvert C5 weiss, 910399, LuPol"></option>
-  <option value="Kuvert C5 weiss, 910201, LuPol"></option>
-  <option value="Laminierfolien Lyreco A3, 125 (250) Micron, Sch zu 100 Stk"></option>
-  <option value="Laminierfolien Leitz A4, 250 (500) Micron, Sch zu 100 Stk"></option>
-  <option value="Laminierfolien Ibico A4, 80 (160) Micron, Sch zu 100 Stk"></option>
-  <option value="Laminierfolien Leitz A4, 125 Micron, Sch zu 100 Stk"></option>
-  <option value="Luftpolsterkuvert 150x210mm Siegelung"></option>
-  <option value="Luftpolsterkuvert 180x260mm Siegelung"></option>
-  <option value="Marker Stabilo Boss rot"></option>
-  <option value="Marker Stabilo Boss blau"></option>
-  <option value="Marker Stabilo gelb"></option>
-  <option value="Marker Stabilo grün"></option>
-  <option value="Marker Stabilo orange"></option>
-  <option value="Marker Stabilo rosa"></option>
-  <option value="Massstab Plexiglas 30cm"></option>
-  <option value="Messer NT-Cutter A-300"></option>
-  <option value="Ersatzklingen A-170 zu Messer A-300"></option>
-  <option value="Minigrip Polygrip, Nr. 1, 75x90x0.05mm"></option>
-  <option value="Minigrip Polygrip, Nr. 2, 90x110x0.05mm"></option>
-  <option value="Minigrip Polygrip, Nr. 3, 115x155x0.05mm"></option>
-  <option value="Minigrip Polygrip, Nr. 4, 160x225x0.05mm"></option>
-  <option value="Minigrip Polygrip, Nr. 5, 220x305x0.05mm"></option>
-  <option value="Minigrip, Polygrip, Nr. 15, 50x75mm"></option>
-  <option value="Minigrip, Polygrip, Nr. 16, 90x110mm"></option>
-  <option value="Minigrip, Polygrip, Nr. 17, 115x155mm"></option>
-  <option value="Minigrip, Polygrip, Nr. 18, 160x220mm"></option>
-  <option value="Minigrip, Polygrip, Nr. 19, 230x320mm"></option>
-  <option value="Notizblock 4mm Recycling-Papier A4"></option>
-  <option value="Notizblock 4mm Recycling-Papier A5"></option>
-  <option value="Notizheft A6, Moleskine, kariert, schwarz"></option>
-  <option value="Ordner für A4, Rückenbreite 4cm grau, 2 Ring-Mechanik, (Bundesordner)"></option>
-  <option value="Ordner für A4, Rückenbreite 7cm grau, 2 Ring-Mechanik, (Bundesordner)"></option>
-  <option value="Ordner-Register für A4 hoch, 1-6 nummeriert"></option>
-  <option value="Ordner-Register für A4 hoch, 1-12 nummeriert"></option>
-  <option value="Ordner-Register für A4 hoch, 1-20 nummeriert"></option>
-  <option value="Ordner-Register für A4 hoch, A-Z teildeckend"></option>
-  <option value="Paketetiketten 110x81mm (Post)"></option>
-  <option value="Papiertragtaschen mit Papierhenkeln, Modell 1, braun, Gr. 32x13x42.5cm"></option>
-  <option value="Projektionsschreiber Superfein, S, 0.4mm, rot"></option>
-  <option value="Projektionsschreiber Superfein, S, 0.4mm, blau"></option>
-  <option value="Projektionsschreiber Superfein, S, 0.4mm, grün"></option>
-  <option value="Projektionsschreiber Superfein, S, 0.4mm, schwarz"></option>
-  <option value="Projektionsschreiber Superfein S, 0.4mm, orange"></option>
-  <option value="Projektionsschreiber Mittel, M, 1.0mm, blau"></option>
-  <option value="Projektionsschreiber Mittel, M, 1.0mm, grün"></option>
-  <option value="Projektionsschreiber Mittel, M, 1.0mm, schwarz"></option>
-  <option value="Projektionsschreiber Mittel, M, 1.0mm, rot"></option>
-  <option value="Projektionsschreiber Mittel, M, 1,0mm, orange"></option>
-  <option value="Radiergummi f. Bleistifte, 65mm lang weiss"></option>
-  <option value="Registratur-Locher Leitz 5008, schwarz"></option>
-  <option value="Reparaturetiketten mit Bindfaden, 60mm120mm, vorgedruckt, Bund zu 10 Stk"></option>
-  <option value="Schnur-Becher Flurocord 2mmx30m, braun"></option>
-  <option value="Schriftbandkassette P-Touch TZe-231, 12mm"></option>
-  <option value="Schriftbandkassette P-Touch TZe-241, 18mm"></option>
-  <option value="Schriftbandkassette P-Touch TZe-251, 24mm"></option>
-  <option value="Sichtmappen für A4 transparent farbl (Plastik Mäppli)"></option>
-  <option value="Telefonblock mit Druck, A5 gelb"></option>
-  <option value="Verkehrsunfallkreide, weiss, R036501 (neuer Artikel)"></option>
-  <option value="Verkehrsunfallkreide, gelb, R036502 (z.Zt. 3 Sterne Kreide)"></option>
-  <option value="Verkehrsunfallkreide, rot, R036503 (z.Zt. 3 Sterne Kreide)"></option>
-  <option value="Verpackungsband 38mmx66m, Tesa Strong"></option>
-  <option value="Versandpackungen für Kontrollschilder"></option>
-  <option value="Frankatur Fr. 7.00, Kontrollschilder"></option>
-  <option value="Zeigetaschen A4 glasklar 80my glatt, Sch zu 100 Stk"></option>
-  <option value="Zügel-Boxen, 54x34x35cm mit Griffloch"></option>
-  <option value="110-Liter Pet Einlagesäcke"></option>
-  <option value="90-Liter Alu Sammelsäcke (für Getränkedosen)"></option>
-  <option value="CosaLine Nitril Comfort lang pf S"></option>
-  <option value="CosaLine Nitril Comfort lang pf M"></option>
-  <option value="CosaLine Nitril Comfort lang pf L"></option>
-  <option value="CosaLine Nitril Comfort lang pf XL"></option>
-  <option value="BEPANTHEN Plus Microdos, 30ml, Desinfiziert, kl. Wunden"></option>
-  <option value="Dreiecktuch, Textil, 96x96x126cm"></option>
-  <option value="Kohäsive Fixierbinde Royalblau 6cm x 3m"></option>
-  <option value="MasterTex Pflasterset 10 x 6 cm"></option>
-  <option value="Rettungs-Schutz-Decke (Folie silber/gold)"></option>
-  <option value="Taschenmaske Merlin E-Mask (Pocket)"></option>
-  <option value="Verbandpäckchen M, Verband und Kompresse"></option>
-  <option value="Händedesinfektionsmittel 100ml"></option>
-  <option value="Händedesinfektionsmittel 500ml"></option>
-  <option value="Händedesinfektionsmittel 5 L"></option>
-  <option value="Desinfek. Mikrozid AF Tücher, Box"></option>
-  <option value="Desinfek. Mikrozid AF Tücher Nachfüllb."></option>
-  <option value="Desinfektionstücher Kodan N Wipes Box"></option>
-  <option value="Desinfekt. Kodan N Wipes Nachfüllbeutel"></option>
-  <option value="Hygienemasken"></option>
-
     </datalist>
 
 </div>
@@ -332,186 +171,35 @@ const materialData = {
     "Alcomat-Mundstücke BLMP-250, Alco True P, transparent": "1003723",
     "Einwegmundstück zu Intoxilyzer 9000, transparent/rot": "1002997",
     "Anhänge-Etiketten mit Bindfaden 35x50mm": "1000733",
-    "Anhänge-Etiketten mit Bindfaden 50x100mm": "1000734",
-    "Badgeholder, 16-434, für Polizeiausweis": "1002086",
-"Clip für Badgeholder ,16-316, für Polizeiausweis": "1002172",
-"Batterie, LR03, AAA 1,5V": "1000397",
-"Batterie, LR6, AA 1,5 V": "1000398",
-"Batterie, LR14, Baby, 1,5V": "1000399",
-"Batterie, LR20, 1,5V": "1000400",
-"Klotzbatterie, 6LR61, 9V": "1000407",
-"Knopfbatterie, CR2032, 3V": "1000404",
-"Knopfbatterie, DA10N6, 1,4V, (Hörgerät)": "1000408",
-"Knopfbatterie, LR44, 1,5V": "1000415",
-"Betonband Tesa 50mmx50m, schwarz": "1000845",
-"Bleistifte Natura HB/mittel,": "1000862",
-"Boardmarker edding 250 abwischbar schw.": "1000807",
-"Boardmarker edding 250 abwischbar rot": "1000808",
-"Boardmarker edding 250 abwischbar blau": "1000809",
-"Boardmarker edding 250 abwischbar grün": "1000810",
-"Boardmarker edding 250 abwischbar orange": "1002607",
-"Briefkörbe für A4 schwarz, 10cm": "1000901",
-"Briefkörbe für A4 schwarz, 6cm": "1000902",
-"Büroklammern, Grösse 3/4/5, Beutel assortiert": "1000689",
-"Büroschere 21cm lang, rot, rechts": "1000663",
-"Büroschere 21cm lang, rot, links": "1005257",
-"Cannabis Typification Test (CBD/THC)": "1004373",
-"CD/ DVD Zeigbuchtaschen Favorit, für 1 CD/DVD, transparent": "1000516",
-"CD-R Imation, 700 MB, 80 Min, 1x beschreibbar, 18647, Spindel zu 50 Stk": "1000517",
-"DrugWipe 5S+, Tests (Schnelltest Drogen)": "1001445",
-"DVD-R TDK 4.7 GB, 120 Min, Spindel zu 25 Stk": "1000513",
-"Elcosave, Sicherheitstaschen": "1001508",
-"Etiketten Herma 2250, Dm 19mm ,weiss": "1000745",
-"Etiketten Herma 2251, Dm 19mm, gelb": "1000746",
-"Etiketten Herma 2252, Dm 19mm, rot": "1000747",
-"Etiketten Herma 2253, Dm 19mm, blau": "1000748",
-"Etiketten Herma 2255, Dm 19mm, grün": "1000749",
-"Etiketten Herma 2270, Dm 32mm, weiss": "1000750",
-"Etiketten Herma 2271, Dm 32mm, gelb": "1000751",
-"Etiketten Herma 2272, Dm 32mm, rot": "1000752",
-"Etiketten Herma 2273, Dm 32mm, blau": "1000753",
-"Etiketten Herma 2275, Dm 32mm, grün": "1000754",
-"Etiketten Herma 2276, Dm 32mm, l`rot": "1000755",
-"Faltenkuvert B4 4cm-Bodenfalten, Seitenfalten, Haftklebeverschluss, KF34018, Effektensäcke": "1000442",
-"Farbstifte Bicolor blau/rot": "1000793",
-"Frankatur Fr. 1.00, B-Post, B5, 0-100g": "1001735",
-"Frankatur Fr. 1.20, A-Post, B5, 0-100g": "1001734",
-"Frankatur Fr. 2.50, A-Post, B4, 0-500g": "1001736",
-"Filzschreiber Schneider, 0.4mm, schwarz": "1000813",
-"Filzschreiber Schneider, 0.4mm, rot": "1000814",
-"Filzschreiber Schneider, 0.4 mm, blau": "1000815",
-"Filzschreiber Schneider, 0.4mm, grün": "1000816",
-"Flipchart- Block 67x95cm": "1001011",
-"Fud-/ Blutentnahme Set": "1001446",
-"Grifflochtragtaschen weiss, unbedruckt 600x550/50x0,07 mm, Griffloch verstärkt, gross": "1001530",
-"Grifflochtragtaschen weiss, unbedruckt 400x450/40x0.06 mm, Griffloch verstärkt, klein": "1001531",
-"Haftnotizenzettel 38x51mm, gelb, selbstklebend ablösbar": "1000877",
-"Haftnotizenzettel 76x76mm, gelb, selbstklebend ablösbar": "1000878",
-"Haftnotizenzettel 76x127mm, gelb, selbstklebend ablösbar": "1000879",
-"Heftapparat Leitz Nexxt 5502, schwarz": "1000703",
-"Heftklammern Leitz 24/6, zu 5502, heften bis zu 6mm": "1000704",
-"Heftklammern Bostitch SB8, heften bis zu 6mm": "1000718",
-"Kehrichtsack 35 lt.": "1001524",
-"Kehrichtsack 60 lt.": "1001525",
-"Kehrichtsack 110 lt.": "1001523",
-"Klebeband transparent 19mmx33m, Rolle nicht beschriftbar": "1000656",
-"Klebbandabroller non permanent, 8.4mmx12m": "1000646",
-"Klebbandabroller Ersatzrolle, non permanent, 8.4mmx12m, Roll-Fix": "1000647",
-"Klebbandabroller permanent, 8.4mmx12m,": "1000648",
-"Klebbandabroller Ersatzrolle, permanent": "1000649",
-"Klebestift Pritt gross 43g": "1003500",
-"Klebeband-Handabroller rauchfarbig, für 19mm33m": "1000655",
-"Kopierpapier A4, 80g": "1001933",
-"Kopierpapier A3 80g weiss": "1001067",
-"Korrekturroller 4.2mmx12m, Roll-Fix mit Abroller, nachfüllbar": "1000643",
-"Korrekturroller Ersatzrolle 4.2mmx12m, Roll-Fix": "1000644",
-"Kugelschreiber 825, schwarz": "1000829",
-"Kugelschreiber 825, rot": "1000830",
-"Kugelschreiber 825, blau": "1000831",
-"Kugelschreiber 825, grün": "1000832",
-"Kuvert C4 Interne Post 120g": "1001075",
-"Kuvert C4 braun, mit Logo und Strichcode , 910086": "1001189",
-"Fensterkuvert C5 weiss, 910399, LuPol": "1001197",
-"Kuvert C5 weiss, 910201, LuPol": "1001195",
-"Laminierfolien Lyreco A3, 125 (250) Micron, Sch zu 100 Stk": "1001116",
-"Laminierfolien Leitz A4, 250 (500) Micron, Sch zu 100 Stk": "1001117",
-"Laminierfolien Ibico A4, 80 (160) Micron, Sch zu 100 Stk": "1001118",
-"Laminierfolien Leitz A4, 125 Micron, Sch zu 100 Stk": "1001119",
-"Luftpolsterkuvert 150x210mm Siegelung": "1006972",
-"Luftpolsterkuvert 180x260mm Siegelung": "1006973",
-"Marker Stabilo Boss rot": "1000865",
-"Marker Stabilo Boss blau": "1000866",
-"Marker Stabilo gelb": "1000867",
-"Marker Stabilo grün": "1000868",
-"Marker Stabilo orange": "1000869",
-"Marker Stabilo rosa": "1000870",
-"Massstab Plexiglas 30cm": "1000727",
-"Messer NT-Cutter A-300": "1000683",
-"Ersatzklingen A-170 zu Messer A-300": "1000684",
-"Minigrip Polygrip, Nr. 1, 75x90x0.05mm,": "1001498",
-"Minigrip Polygrip, Nr. 2, 90x110x0.05mm,": "1001499",
-"Minigrip Polygrip, Nr. 3, 115x155x0.05mm,": "1001500",
-"Minigrip Polygrip, Nr. 4, 160x225x0.05mm,": "1001503",
-"Minigrip Polygrip, Nr. 5, 220x305x0.05mm,": "1001504",
-"Minigrip, Polygrip, Nr. 15, 50x75mm": "1001513",
-"Minigrip, Polygrip, Nr. 16, 90x110mm": "1001514",
-"Minigrip, Polygrip, Nr. 17, 115x155mm": "1001515",
-"Minigrip, Polygrip, Nr. 18, 160x220mm": "1001516",
-"Minigrip, Polygrip, Nr. 19, 230x320mm": "1001517",
-"Notizblock 4mm Recycling-Papier A4": "1000483",
-"Notizblock 4mm Recycling-Papier A5": "1000484",
-"Notizheft A6, Moleskine, kariert, schwarz,": "1000788",
-"Ordner für A4, Rückenbreite 4cm grau, 2 Ring-Mechanik, (Bundesordner)": "1001014",
-"Ordner für A4, Rückenbreite 7cm grau, 2 Ring-Mechanik, (Bundesordner)": "1001009",
-"Ordner-Register für A4 hoch, 1-6 nummeriert,": "1000915",
-"Ordner-Register für A4 hoch, 1-12 nummeriert,": "1000916",
-"Ordner-Register für A4 hoch, 1-20 nummeriert,": "1000917",
-"Ordner-Register für A4 hoch, A-Z teildeckend,": "1000918",
-"Paketetiketten 110x81mm (Post)": "1000739",
-"Papiertragtaschen mit Papierhenkeln, Modell 1, braun, Gr. 32x13x42.5cm": "1001483",
-"Projektionsschreiber Superfein, S, 0.4mm, rot": "1000817",
-"Projektionsschreiber Superfein, S, 0.4mm, blau": "1000818",
-"Projektionsschreiber Superfein, S, 0.4mm, grün": "1000819",
-"Projektionsschreiber Superfein, S, 0.4mm, schwarz": "1000820",
-"Projektionsschreiber Superfein S, 0.4mm, orange": "1004216",
-"Projektionsschreiber Mittel, M, 1.0mm, blau": "1000821",
-"Projektionsschreiber Mittel, M, 1.0mm, grün": "1000822",
-"Projektionsschreiber Mittel, M, 1.0mm, schwarz": "1000823",
-"Projektionsschreiber Mittel, M, 1.0mm, rot": "1000824",
-"Projektionsschreiber Mittel, M, 1,0mm, orange": "1000825",
-"Radiergummi f. Bleistifte, 65mm lang weiss": "1000792",
-"Registratur-Locher Leitz 5008, schwarz": "1000729",
-"Reparaturetiketten mit Bindfaden, 60mm120mm, vorgedruckt, Bund zu 10 Stk": "1001644",
-"Schnur-Becher Flurocord 2mmx30m, braun": "1000480",
-"Schriftbandkassette P-Touch TZe-231, 12mm": "1000602",
-"Schriftbandkassette P-Touch TZe-241, 18mm": "1000595",
-"Schriftbandkassette P-Touch TZe-251, 24mm": "1000596",
-"Sichtmappen für A4 transparent farbl (Plastik Mäppli),": "1000946",
-"Telefonblock mit Druck, A5 gelb": "1000847",
-"Verkehrsunfallkreide, weiss, R036501 (neuer Artikel)": "1001636",
-"Verkehrsunfallkreide, gelb, R036502 (z.Zt. 3 Sterne Kreide)": "1001637",
-"Verkehrsunfallkreide, rot, R036503 (z.Zt. 3 Sterne Kreide)": "1006273",
-"Verpackungsband 38mmx66m, Tesa Strong": "1000479",
-"Versandpackungen für Kontrollschilder": "1001726",
-"Frankatur Fr. 7.00, Kontrollschilder": "1001833",
-"Zeigetaschen A4 glasklar 80my glatt, Sch zu 100 Stk": "1000929",
-"Zügel-Boxen, 54x34x35cm mit Griffloch": "1001123",
-"110-Liter Pet Einlagesäcke": "1001526",
-"90-Liter Alu Sammelsäcke (für Getränkedosen)": "1006291",
-"CosaLine Nitril Comfort lang pf S": "1005329",
-"CosaLine Nitril Comfort lang pf M": "1005330",
-"CosaLine Nitril Comfort lang pf L": "1005331",
-"CosaLine Nitril Comfort lang pf XL": "1005332",
-"BEPANTHEN Plus Microdos, 30ml, Desinfiziert, kl. Wunden": "1001274",
-"Dreiecktuch, Textil, 96x96x126cm": "1001278",
-"Kohäsive Fixierbinde Royalblau 6cm x 3m": "1002133",
-"MasterTex Pflasterset 10 x 6 cm": "1001275",
-"Rettungs-Schutz-Decke (Folie silber/gold)": "1001277",
-"Taschenmaske Merlin E-Mask (Pocket)": "1001279",
-"Verbandpäckchen M, Verband und Kompresse": "1001276",
-"Händedesinfektionsmittel 100ml": "1005740",
-"Händedesinfektionsmittel 500ml": "1005741",
-"Händedesinfektionsmittel 5 L": "1006300",
-"Desinfek. Mikrozid AF Tücher, Box": "1001464",
-"Desinfek. Mikrozid AF Tücher Nachfüllb.": "1001465",
-"Desinfektionstücher Kodan N Wipes Box": "1001439",
-"Desinfekt. Kodan N Wipes Nachfüllbeutel": "1001440",
-"Hygienemasken": "1001262"	
+    "Anhänge-Etiketten mit Bindfaden 50x100mm": "1000734"
 };
 
 // Fügt eine neue Zeile in die Tabelle ein
 function addRow() {
     const tableBody = document.getElementById('tableBody');
-    const newRow = document.createElement('tr');
+    const newRow = document.createElement('div');
+    newRow.classList.add('form-group');
     newRow.innerHTML = `
-        <td><input type="number" name="anzahl[]" required min="1"></td>
-        <td><input list="materialListe" name="material[]" required oninput="updateArtikelnummer(this)"></td>
-        <td><input type="text" name="bemerkung[]" required></td>
-        <td><select name="standort[]">
-            <option value="HP Emmen">HP Emmen</option>
-            <option value="PP Reussbühl">PP Reussbühl</option>
-            <option value="PP Rothenburg">PP Rothenburg</option>
-        </select></td>
+        <div class="form-group-flex">
+            <label for="anzahl">Anzahl</label>
+            <input type="number" name="anzahl[]" required min="1">
+        </div>
+        <div class="form-group">
+            <label for="material">Material</label>
+            <input list="materialListe" name="material[]" required oninput="updateArtikelnummer(this)">
+        </div>
+        <div class="form-group">
+            <label for="bemerkung">Bemerkung</label>
+            <input type="text" name="bemerkung[]" required>
+        </div>
+        <div class="form-group">
+            <label for="standort">Standort</label>
+            <select name="standort[]">
+                <option value="HP Emmen">HP Emmen</option>
+                <option value="PP Reussbühl">PP Reussbühl</option>
+                <option value="PP Rothenburg">PP Rothenburg</option>
+            </select>
+        </div>
     `;
     tableBody.appendChild(newRow);
 }
@@ -537,21 +225,10 @@ function submitForm() {
     let emailBody = "Materialbestellung vom " + formattedDate + "\n\n";
 
     // Füge die Materialinformationen hinzu
-    const tableRows = document.querySelectorAll('#tableBody tr');
+    const tableRows = document.querySelectorAll('#tableBody div.form-group');
     let tableContent = "";
 
     tableRows.forEach(row => {
         const anzahl = row.querySelector('input[name="anzahl[]"]').value;
         const material = row.querySelector('input[name="material[]"]').value;
-        const bemerkung = row.querySelector('input[name="bemerkung[]"]').value;
-        const standort = row.querySelector('select[name="standort[]"]').value;
-        const artikelnummer = materialData[material] || "Nicht verfügbar";
-
-        tableContent += `${anzahl} - ${material} - ${artikelnummer} - ${bemerkung}\nStandort: ${standort}\n`;
-    });
-
-    // E-Mail-Body kombinieren
-    emailBody += tableContent;
-
-    // Empfänger und Betreff definieren
-    let mailtoLink = "mailto:wuko11@bluewin
+        const bemerkung = row.querySelector('input[name="bemerkung[]"]').value
