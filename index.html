@@ -35,6 +35,7 @@
             font-weight: bold;
             margin-right: 10px;
             min-width: 80px;
+            display: inline-block;
         }
 
         input, select {
@@ -72,10 +73,11 @@
             .form-group-flex input,
             .form-group-flex select {
                 flex-grow: 1;
+                width: 70%;  /* Die Eingabefelder nehmen 70% der Breite ein */
             }
 
             label {
-                width: auto;
+                width: 30%;  /* Die Label nehmen 30% der Breite ein */
             }
 
             button {
@@ -117,19 +119,19 @@
             </div>
 
             <!-- Material -->
-            <div class="form-group">
+            <div class="form-group-flex">
                 <label for="material">Material</label>
                 <input list="materialListe" name="material[]" required oninput="updateArtikelnummer(this)">
             </div>
 
             <!-- Bemerkung -->
-            <div class="form-group">
+            <div class="form-group-flex">
                 <label for="bemerkung">Bemerkung</label>
                 <input type="text" name="bemerkung[]" required>
             </div>
 
             <!-- Standort -->
-            <div class="form-group">
+            <div class="form-group-flex">
                 <label for="standort">Standort</label>
                 <select name="standort[]">
                     <option value="HP Emmen">HP Emmen</option>
@@ -184,15 +186,15 @@ function addRow() {
             <label for="anzahl">Anzahl</label>
             <input type="number" name="anzahl[]" required min="1">
         </div>
-        <div class="form-group">
+        <div class="form-group-flex">
             <label for="material">Material</label>
             <input list="materialListe" name="material[]" required oninput="updateArtikelnummer(this)">
         </div>
-        <div class="form-group">
+        <div class="form-group-flex">
             <label for="bemerkung">Bemerkung</label>
             <input type="text" name="bemerkung[]" required>
         </div>
-        <div class="form-group">
+        <div class="form-group-flex">
             <label for="standort">Standort</label>
             <select name="standort[]">
                 <option value="HP Emmen">HP Emmen</option>
@@ -229,6 +231,4 @@ function submitForm() {
     let tableContent = "";
 
     tableRows.forEach(row => {
-        const anzahl = row.querySelector('input[name="anzahl[]"]').value;
-        const material = row.querySelector('input[name="material[]"]').value;
-        const bemerkung = row.querySelector('input[name="bemerkung[]"]').value
+        const anzahl
